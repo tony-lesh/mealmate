@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/light_green">
+    android:background="@color/blue3">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,12 +13,6 @@
         android:orientation="horizontal"
         android:padding="16dp"
         android:background="@color/blue2">
-
-        <ImageView
-            android:id="@+id/app_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/app_icon" />
 
         <TextView
             android:id="@+id/title"
@@ -29,13 +23,6 @@
             android:text="Shopping Cart"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/menu_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:srcCompat="@drawable/menu_icon" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +40,7 @@
 
             <LinearLayout
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.4"
                 android:gravity="end">
             <ImageView
@@ -67,15 +54,16 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_menu_delete" />
             </LinearLayout>
+
             <ImageView
-                android:id="@+id/product_image1"
+                android:id="@+id/recipe"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/mexican_chicken_and_rice" />
 
             <TextView
-                android:id="@+id/product_name1"
+                android:id="@+id/recipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -83,12 +71,12 @@
                 android:textAlignment="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Rice - Steam"
+                android:text="@string/rice_steam"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/product_price1"
+                android:id="@+id/recipePrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -109,6 +97,22 @@
             android:layout_marginStart="16dp"
             android:background="@color/blue2">
 
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="end">
+                <ImageView
+                    android:id="@+id/deleteView0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+                <ImageView
+                    android:id="@+id/payView0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+            </LinearLayout>
             <ImageView
                 android:id="@+id/product_image2"
                 android:layout_width="match_parent"
@@ -119,9 +123,11 @@
 
             <TextView
                 android:id="@+id/product_name2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textAlignment="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Rice - Steam"
@@ -130,10 +136,12 @@
 
             <TextView
                 android:id="@+id/product_price2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:textAlignment="center"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/bwp_0_00"
                 android:textColor="@android:color/black"
