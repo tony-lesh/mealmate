@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MealMate</string>
+    <string name="please_login">Hi,\nPlease Login!</string>
+    <string name="email">Email</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="forgot_password">Don\'t Remember Password? Recover It</string>
+    <string name="facebook">Facebook</string>
+    <string name="login_button">Login</string>
+    <string name="google">Google</string>
+    <string name="login_with">Sign in with</string>
+    <string name="signup">SignUp</string>
+    <string name="enter_your_full_names">Enter your full names</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="names">Names</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="successfully_registered">Successfully Registered!</string>
+    <string name="page_redirectory">You will be redirected to another page</string>
+    <string name="password">Password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="todo">TODO</string>
+    <string name="register_signup">Register/Signup</string>
+    <string name="create_your_naccount">Create Your\nAccount</string>
+    <string name="i_agree_to_the_terms_and_privacy">I agree to the Terms and Privacy</string>
+    <string name="bwp_0_00">BWP 0.00</string>
+</resources>

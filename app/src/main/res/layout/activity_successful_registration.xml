@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".registration_signin.RegistrationSuccessActivity">
+
+    <TextView
+        android:id="@+id/headerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/successfully_registered"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:background="@color/blue2"
+        android:height="60dp"/>
+
+    <ImageView
+        android:id="@+id/imageApproved"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/approved"
+        android:layout_below="@id/headerTextView"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="250dp"
+        android:layout_marginRight="100dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/page_redirectory"
+        android:layout_below="@+id/imageApproved"
+        android:layout_marginTop="-200dp"
+        android:textAlignment="center"
+       />
+
+</RelativeLayout>
