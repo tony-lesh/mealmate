@@ -43,7 +43,11 @@
         <activity
             android:name=".registration_signin.RegistrationSuccessActivity"
             android:exported="false"/>
-
+        <activity
+            android:name=".registration_signin.LandingPageActivity"
+            android:exported="false"/>
+<!--        <activity android:name=".registration_signin.MainActivity"-->
+<!--            android:exported="false"/>-->
         <activity
             android:name=".registration_signin.MainActivity"
             android:exported="true">

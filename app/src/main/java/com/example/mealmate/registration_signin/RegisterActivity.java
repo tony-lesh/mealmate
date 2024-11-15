@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     db.child(userId).setValue(user);
                     Toast.makeText(RegisterActivity.this, "Successfully Registered!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class); // Replace SignUpActivity with your signup activity
+                    Intent intent = new Intent(RegisterActivity.this, LandingPageActivity.class); // Replace SignUpActivity with your signup activity
                     startActivity(intent);
                 }
                 else {
@@ -90,3 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 }
+
+
+

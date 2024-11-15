@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6EDED"
+    android:background="@color/blue3"
     tools:context=".registration_signin.MainActivity">
 
     <ImageView
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="@string/enter_email"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:padding="12dp"
             android:textColor="@color/black"
             android:textSize="18sp"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/blue3">
+    android:background="@color/blue3"
+    tools:context=".recipe.Shopping_Cart">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +32,8 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,17 +45,19 @@
                 android:layout_width="180dp"
                 android:layout_height="0dp"
                 android:layout_weight="0.4"
-                android:gravity="end">
+                android:gravity="end"
+                android:padding="5dp">
             <ImageView
                 android:id="@+id/deleteView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                app:srcCompat="@drawable/delete"/>
             <ImageView
                 android:id="@+id/payView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                app:srcCompat="@drawable/pay" />
+
             </LinearLayout>
 
             <ImageView
@@ -89,6 +94,8 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -99,19 +106,20 @@
 
             <LinearLayout
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.4"
-                android:gravity="end">
+                android:gravity="end"
+                android:padding="5dp">
                 <ImageView
-                    android:id="@+id/deleteView0"
+                    android:id="@+id/deleteView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_delete" />
+                    app:srcCompat="@drawable/delete"/>
                 <ImageView
-                    android:id="@+id/payView0"
+                    android:id="@+id/payView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_delete" />
+                    app:srcCompat="@drawable/pay" />
             </LinearLayout>
             <ImageView
                 android:id="@+id/product_image2"
@@ -148,5 +156,8 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
+
+
     </LinearLayout>
+
 </LinearLayout>

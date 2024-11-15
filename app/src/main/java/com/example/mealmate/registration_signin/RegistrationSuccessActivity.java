@@ -12,16 +12,16 @@ public class RegistrationSuccessActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_successful_registration);
 
-        new Runnable() {
-            public void postDelayed(int i) {
-            }
-
-            @Override
-            public void run() {
-                Intent intent = new Intent(RegistrationSuccessActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }.postDelayed(2000);
+//        new Runnable() {
+//            public void postDelayed(int i) {
+//            }
+//
+//            @Override
+//            public void run() {
+//                Intent intent = new Intent(RegistrationSuccessActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        }.postDelayed(2000);
     }
 }
