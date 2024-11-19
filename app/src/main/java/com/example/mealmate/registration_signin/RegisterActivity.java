@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mealmate.R;
+import com.example.mealmate.general.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -87,7 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
 

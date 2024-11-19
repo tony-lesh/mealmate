@@ -1,6 +1,4 @@
-package com.example.mealmate.registration_signin;
-
-import androidx.annotation.NonNull;
+package com.example.mealmate.general;
 
 public class User {
     private String userId, name, email, password, confirmPassword;

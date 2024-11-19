@@ -46,6 +46,11 @@
         <activity
             android:name=".registration_signin.LandingPageActivity"
             android:exported="false"/>
+        <activity android:name=".recipe.RecipeActivity"
+            android:exported="false"/>
+        <activity android:name=".recipe.Shopping_Cart"
+            android:exported="false"/>
+
 <!--        <activity android:name=".registration_signin.MainActivity"-->
 <!--            android:exported="false"/>-->
         <activity

@@ -188,6 +188,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mealmate.R;
+import com.example.mealmate.general.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -225,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
         EditText editTextEmail = findViewById(R.id.editTextUserEmail);
         EditText editTextPassword = findViewById(R.id.editTextUserPassword);
         Button submitBtn = findViewById(R.id.loginBtn);
-
 
         textViewSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, LandingPageActivity.class);
                                 startActivity(intent);
                                 finish();
+
                             }, 2000);
                             // 2 seconds delay
 

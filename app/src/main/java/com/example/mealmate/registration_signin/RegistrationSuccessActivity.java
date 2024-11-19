@@ -23,5 +23,6 @@ public class RegistrationSuccessActivity extends Activity {
 //                finish();
 //            }
 //        }.postDelayed(2000);
+
     }
 }

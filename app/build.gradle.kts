@@ -39,6 +39,13 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
+    
+    implementation (libs.retrofit2.retrofit)
+    implementation (libs.converter.gson)
+
+    implementation (libs.glide)
+    annotationProcessor (libs.github.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

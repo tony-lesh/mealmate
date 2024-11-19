@@ -31,4 +31,8 @@
     <string name="search">Search...</string>
     <string name="today_s_recommended_recipe">Today\'s Recommended Recipe</string>
     <string name="welcome_to_meal_mate">Welcome to Meal Mate!</string>
+    <string name="pasta_green_salad">Pasta + Green Salad</string>
+    <string name="recipe">Recipe</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
 </resources>

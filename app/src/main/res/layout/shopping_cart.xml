@@ -22,7 +22,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="sans-serif-medium"
             android:text="Shopping Cart"
-            android:textColor="@android:color/white"
+            android:textColor="@color/blue"
             android:textSize="18sp" />
     </LinearLayout>
 
