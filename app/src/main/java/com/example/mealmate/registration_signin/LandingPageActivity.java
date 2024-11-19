@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.mealmate.R;
 import com.example.mealmate.general.User;
+import com.example.mealmate.mealPlan.MealPlanActivity;
 import com.example.mealmate.notifications.NotificationsActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
@@ -78,7 +79,9 @@ public class LandingPageActivity extends Activity {
         mealPlanTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   Intent intent = new Intent(LandingPageActivity.this, Meal.class);
+                Toast.makeText(v.getContext(), "Meal Plan Clicked!", Toast.LENGTH_LONG).show();
+                Intent mealPlanIntent = new Intent(LandingPageActivity.this, MealPlanActivity.class);
+                startActivity(mealPlanIntent);
             }
         });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -145,7 +148,7 @@ public class LandingPageActivity extends Activity {
         } else if (itemId == notificationsId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)
-            Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
+            Intent notificationsIntent = new Intent(this, MealPlanActivity.class);
             startActivity(notificationsIntent);
         }else if (itemId == settingsId) {
             drawer.closeDrawer(GravityCompat.START);

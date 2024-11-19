@@ -103,10 +103,11 @@
                 android:id="@+id/createMealTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Plan Meal"
+                android:text="Click me!"
                 android:textColor="@color/blue1"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:textAlignment="center"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="5dp"/>
 
