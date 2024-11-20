@@ -27,9 +27,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-
+        holder.bind(userList.get(position));
         RecipeBean recipeBean = userList.get(position);
-        holder.bind(recipeBean);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +60,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return userList.size();
     }
 }

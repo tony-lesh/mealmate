@@ -6,21 +6,33 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealmate.R;
+import com.example.mealmate.general.HomeSearchResponse;
+import com.example.mealmate.general.RecipeSearchResponse;
+import com.example.mealmate.general.SpoonAcularAPI;
 import com.example.mealmate.general.User;
 import com.example.mealmate.mealPlan.MealPlanActivity;
 import com.example.mealmate.notifications.NotificationsActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
 import com.example.mealmate.recipe.RecipeBean;
+import com.example.mealmate.recipe.UserAdapter;
 import com.example.mealmate.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -28,21 +40,45 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonSyntaxException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LandingPageActivity extends Activity {
 
     private DrawerLayout drawer;
     private TextView tagNameTextView;
     DatabaseReference userRef;
+
+    private RecyclerView recyclerView;
+    private HomeAdapter homeAdapter;
+    private List<HomeBean> homeList;
+
+    //Spoonacular API key
+    private static final String API_KEY = "bbd9856b92e34c7bbd0b995d94d7b1f9";
+    private static final String BASE_URL = "https://api.spoonacular.com/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         drawer = findViewById(R.id.drawer_layout);
         User user = new User();
         // Get the menu icon (optional)
         ImageView menuIcon = findViewById(R.id.drawer);  // Assuming your menu icon has this id
-        TextView mealPlanTxtView = findViewById(R.id.createMealTextView);
+      //  TextView mealPlanTxtView = findViewById(R.id.createMealTextView);
         NavigationView navigationView = findViewById(R.id.nav_view); // Replace R.id.nav_view with your actual ID
         tagNameTextView = findViewById(R.id.tagName);
 
@@ -76,12 +112,22 @@ public class LandingPageActivity extends Activity {
                 }
             });
         }
-        mealPlanTxtView.setOnClickListener(new View.OnClickListener() {
+//        mealPlanTxtView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(v.getContext(), "Meal Plan Clicked!", Toast.LENGTH_LONG).show();
+//                Intent mealPlanIntent = new Intent(LandingPageActivity.this, MealPlanActivity.class);
+//                startActivity(mealPlanIntent);
+//            }
+//        });
+
+        Button createMealTextView = findViewById(R.id.createMealButton);
+        createMealTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Meal Plan Clicked!", Toast.LENGTH_LONG).show();
-                Intent mealPlanIntent = new Intent(LandingPageActivity.this, MealPlanActivity.class);
-                startActivity(mealPlanIntent);
+                Intent intent = new Intent(v.getContext(), RecipeActivity.class);
+                startActivity(intent);
             }
         });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -92,6 +138,14 @@ public class LandingPageActivity extends Activity {
                 return true;
             }
         });
+
+        recyclerView = findViewById(R.id.homeRecyclerView);
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        homeList = new ArrayList<>();
+        homeAdapter = new HomeAdapter(homeList);
+        recyclerView.setAdapter(homeAdapter);
+        fetchRecipes();
     }
 
     private boolean isDrawerOpen() {
@@ -123,25 +177,6 @@ public class LandingPageActivity extends Activity {
             startActivity(homeIntent);
         } else if (itemId == recipeId) {
             drawer.closeDrawer(GravityCompat.START);
-
-
-
-//            String recipeId = userRef.push().getKey();
-//            RecipeBean recipeBean = new RecipeBean(recipeId, name, price, imageRecipe);
-//            if(recipeBean !=null){
-//
-//                assert recipeId != null;
-//                userRef.child(recipeId).setValue(recipeBean);
-//                Toast.makeText(LandingPageActivity.this, "Data successfully saved!", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(LandingPageActivity.this, RecipeActivity.class);
-//                startActivity(intent);
-//            }
-//            else {
-//                Toast.makeText(LandingPageActivity.this, "Failed to save data!", Toast.LENGTH_LONG).show();
-//            }
-
-
-            // Handle recipe item click
             Intent recipeIntent = new Intent(this, RecipeActivity.class);
             startActivity(recipeIntent);
             // ... and so on for other items
@@ -166,6 +201,46 @@ public class LandingPageActivity extends Activity {
             Intent profileIntent = new Intent(this, ProfileActivity.class);
             startActivity(profileIntent);
         }
+    }
+
+    private void fetchRecipes() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
+
+        Call<HomeSearchResponse> call = spoonacularApi.homeRecipes("recipes", API_KEY);
+        call.enqueue(new Callback<HomeSearchResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<HomeSearchResponse> call, @NonNull Response<HomeSearchResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        List<HomeBean> home = response.body().getHome_recipe();
+                        if (home != null && !home.isEmpty()) {
+                            homeList.addAll(home);
+                            homeAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("RecipeActivity", "No recipes found for the given query");
+                            Toast.makeText(LandingPageActivity.this, "No recipes found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
+                        Toast.makeText(LandingPageActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
+                    Toast.makeText(LandingPageActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<HomeSearchResponse> call, @NonNull Throwable t) {
+                Log.e("RecipeActivity", "Network error: " + t.getMessage());
+                Toast.makeText(LandingPageActivity.this, "Network error fetching recipes! Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 

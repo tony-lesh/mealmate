@@ -1,211 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/main"
     tools:context=".registration_signin.LandingPageActivity"
     android:fitsSystemWindows="true"
     android:background="@color/blue3">
 
-
-    <RelativeLayout
-        android:id="@+id/topNavBar"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/blue2">
+        android:background="@color/blue2"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="sans-serif-medium"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
+            android:padding="0dp"
+            android:layout_weight="0.6">
+        <TextView
+            android:id="@+id/homeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Home"
-            android:textColor="@color/blue"
+            android:textColor="@color/blue1"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tagName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/homeTextView"
+            android:text="Welcome Lesh!"
             android:textColor="@color/black"
-            android:text="@string/welcome_lesh"
-            android:layout_below="@id/title"
-            android:layout_marginStart="15dp"/>
-    </RelativeLayout>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topNavBar"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black1"
-        android:textColorHint="#1A1919"
-        android:hint="@string/search"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/edit_text_background"
-        android:padding="12dp"/>
+            android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/search_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topNavBar"
+        android:layout_below="@id/toolbar"
         android:layout_marginHorizontal="20dp"
         android:gravity="end">
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/search_icon"/>
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/cardViewOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_icon"
-        android:layout_marginTop="50dp"  >
-
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:id="@+id/dashPlan"
-    android:backgroundTint="@color/blue4"
-    android:layout_marginHorizontal="20dp"
-    android:fitsSystemWindows="true"
-    app:cardCornerRadius="10dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginVertical="10dp">
-        <TextView
-            android:id="@+id/mealPlanTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:text="Let's create your meal!"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/createMealTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Click me!"
-                android:textColor="@color/blue1"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"/>
-
-        </LinearLayout>
-
         <ImageView
-            android:id="@+id/mealImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/cook"/>
-
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/search_icon"/>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
-    </FrameLayout>
 
-    <TextView
-        android:id="@+id/recommendedTextView"
+    <EditText
+        android:id="@+id/editTxtSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cardViewOverlay"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="20dp"
         android:textColor="@color/black"
-        android:text="@string/today_s_recommended_recipe"
-        android:textStyle="bold"
-        android:textSize="20sp"/>
-
-
-    <FrameLayout
-        android:id="@+id/cardViewOverlay1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recommendedTextView"
-        android:layout_marginTop="20dp" >
+        android:textColorHint="@color/black"
+        android:hint="@string/search"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/dashPlan1"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:backgroundTint="@color/blue4"
-        android:layout_marginHorizontal="20dp"
-        app:cardCornerRadius="10dp">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/mealPlanTextView1"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:textColor="@color/blue1"
-                android:text="Food + Drink"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:textStyle="italic"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/planView"
+        android:layout_marginTop="40dp"
+        app:cardCornerRadius="7dp"
+        android:layout_below="@id/editTxtSearch"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginHorizontal="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
-            android:gravity="end">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp"
+                android:padding="0dp"
+                android:layout_weight="0.6">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Let's Plan Your Meal!"/>
 
+                <Button
+                    android:id="@+id/createMealButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Click me!"/>
+
+
+            </LinearLayout>
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/like_heart"
-                android:padding="5dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cook"/>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/mealImageView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mealPlanTextView1"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/mexican_chicken_and_rice"
-            android:background="@drawable/edit_text_background"/>
-
-    </RelativeLayout>
     </androidx.cardview.widget.CardView>
-    </FrameLayout>
+
+    <TextView
+        android:id="@+id/recommendTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+       android:text="Recommended for today"
+        android:textColor="@color/black"
+        android:layout_below="@id/planView"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="20dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/recommendTextView"
+          android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/blue3">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -227,6 +170,8 @@
                     android:padding="5dp"/>
             </LinearLayout>
 
+
+
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -238,5 +183,4 @@
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
-
 </RelativeLayout>

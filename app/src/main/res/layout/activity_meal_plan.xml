@@ -195,8 +195,7 @@
             android:id="@+id/breakfastImageView"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
-            android:layout_marginHorizontal="20dp"
-            />
+            android:layout_marginHorizontal="20dp"/>
             </HorizontalScrollView>
 
             <LinearLayout
@@ -249,8 +248,7 @@
                     android:id="@+id/lunchImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="120dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:contentDescription="TODO" />
+                    android:layout_marginHorizontal="20dp"/>
             </HorizontalScrollView>
 
             <LinearLayout

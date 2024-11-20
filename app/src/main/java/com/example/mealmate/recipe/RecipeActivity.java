@@ -2,6 +2,7 @@ package com.example.mealmate.recipe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +10,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +28,7 @@ import com.example.mealmate.registration_signin.LandingPageActivity;
 import com.example.mealmate.registration_signin.MainActivity;
 import com.example.mealmate.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,18 +44,21 @@ public class RecipeActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-   // private List<RecipeBean> userList;
-    private DatabaseReference dbRef;
     private List<RecipeBean> recipeList;
 
-    // ... (Replace YOUR_API_KEY with your actual Spoonacular API key)
-    private static final String API_KEY = "1ed546123a3b467cba5ed81d4462abef";
+    //Spoonacular API key
+    private static final String API_KEY = "bbd9856b92e34c7bbd0b995d94d7b1f9";
     private static final String BASE_URL = "https://api.spoonacular.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         drawer = findViewById(R.id.drawer_layout);
 
         User user = new User();
@@ -89,12 +91,12 @@ public class RecipeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recipeRecyclerView);
         int numberOfColumns = 2; // Adjust this to your desired number of columns
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recipeList = new ArrayList<>();
         userAdapter = new UserAdapter(recipeList);
         recyclerView.setAdapter(userAdapter);
-
-        fetchRecipes("recipes");
+        fetchRecipes();
 
     }
 
@@ -154,94 +156,90 @@ public class RecipeActivity extends AppCompatActivity {
         }
     }
 
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
+//    private  void fetchRecipes() {
 //
-//        setContentView(R.layout.activity_recipe);
 //
-//        recipeRecyclerView
-//                = findViewById(R.id.recipeRecyclerView);
-//        int numberOfColumns = 2; // Adjust this to your desired number of columns
-//        recipeRecyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
 //
-//        recipeList = new ArrayList<>();
-//        recipeAdapter = new UserAdapter(recipeList); // Replace UserAdapter
+//        SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
 //
-//        recipeRecyclerView.setAdapter(recipeAdapter);
+//        Call<RecipeSearchResponse> call = spoonacularApi.searchRecipes("pasta", API_KEY);
+//        call.enqueue(new Callback<RecipeSearchResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<RecipeSearchResponse> call, @NonNull Response<RecipeSearchResponse>
+//                    response) {
 //
-//        // ... existing code for Firebase database retrieval ...
+//                if (response.isSuccessful()) {
+////                    assert response.body() != null;
+////                    List<RecipeBean> recipes = response.body().getResults();
+////                    Log.d("RecipeActivity", "Fetched " + recipes.size() + " recipes");
+////                    recipeList.addAll(recipes);
+////                    userAdapter.notifyDataSetChanged();
 //
-//        // Fetch recipes using Spoonacular API (optional)
-//        fetchRecipes("chicken"); // Replace "chicken" with your desired search query
+//                    try {
+//                        List<RecipeBean> recipes = response.body().getResults();
+//                        recipeList.addAll(recipes);
+//                        userAdapter.notifyDataSetChanged();
+//                    } catch (JsonSyntaxException e) {
+//                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
+//                        Toast.makeText(RecipeActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
+//                    Toast.makeText(RecipeActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<RecipeSearchResponse> call, @NonNull Throwable t) {
+//                Log.e("RecipeActivity", "Network error: " + t.getMessage());
+//                Toast.makeText(RecipeActivity.this, "Network error fetching recipes! Please check your internet connection.", Toast.LENGTH_SHORT).show();
+//
+//             //   Toast.makeText(RecipeActivity.this, "Network error fetching recipes!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 //    }
 
-    private  void fetchRecipes(String query) {
-
-        String responseJson = new String();
-
-        Gson gson = new Gson();
-        RecipeSearchResponse response = gson.fromJson(responseJson, RecipeSearchResponse.class);
-
+    private void fetchRecipes() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
         SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
 
-        Call<RecipeSearchResponse> call = spoonacularApi.searchRecipes(query, API_KEY);
+        Call<RecipeSearchResponse> call = spoonacularApi.searchRecipes("recipes", API_KEY);
         call.enqueue(new Callback<RecipeSearchResponse>() {
             @Override
-            public void onResponse(@NonNull Call<RecipeSearchResponse> call, @NonNull Response<RecipeSearchResponse>
-                    response) {
-                if (response.isSuccessful())
-                {
-                    assert response.body() != null;
-                    List<RecipeBean> recipes = response.body().getResults();
-
-//                    for (RecipeSearchResponse.Result result : response.getResults()) {
-//                        RecipeBean recipe = new RecipeBean(
-//                                result.getId(),
-//                                result.getTitle(),
-//                                result.getImage(),
-//                                result.getIngredients(),
-//                                result.getInstructions()
-//                        );
-//                        recipes.add(recipe);
-//                    }
-                    recipeList.addAll(recipes);
-                    userAdapter.notifyDataSetChanged();
+            public void onResponse(@NonNull Call<RecipeSearchResponse> call, @NonNull Response<RecipeSearchResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        List<RecipeBean> recipes = response.body().getResults();
+                        if (recipes != null && !recipes.isEmpty()) {
+                            recipeList.addAll(recipes);
+                            userAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("RecipeActivity", "No recipes found for the given query");
+                            Toast.makeText(RecipeActivity.this, "No recipes found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
+                        Toast.makeText(RecipeActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
+                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
                     Toast.makeText(RecipeActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<RecipeSearchResponse> call, @NonNull Throwable t) {
-                Toast.makeText(RecipeActivity.this, "Network error fetching recipes!", Toast.LENGTH_SHORT).show();
+                Log.e("RecipeActivity", "Network error: " + t.getMessage());
+                Toast.makeText(RecipeActivity.this, "Network error fetching recipes! Please try again later.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    //        dbRef = FirebaseDatabase.getInstance().getReference("Users");
-//        dbRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                recipeList.clear();
-//                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-//                    RecipeBean rBean = dataSnapshot.getValue(RecipeBean.class);
-//                    recipeList.add(rBean);
-//                }
-//                userAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(RecipeActivity.this, "Failed to load data!", Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
 }

@@ -13,16 +13,16 @@ import com.example.mealmate.R;
 
 public class UserViewHolder extends RecyclerView.ViewHolder {
 
-    TextView recipeName, recipePrice;
+    TextView recipeName,  recipeIngredients ;
     ImageView recipeImage;
-    ImageButton recipeAddToCart, recipeLike;
+    ImageView recipeAddToCart, recipeLike;
     ImageView recipeRate;
 
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
        recipeImage = itemView.findViewById(R.id.recipeImage);
        recipeName = itemView.findViewById(R.id.recipeName);
-       recipePrice = itemView.findViewById(R.id.recipePrice);
+       recipeIngredients = itemView.findViewById(R.id.recipeIngredients);
        recipeAddToCart = itemView.findViewById(R.id.recipeAddToCart);
        recipeRate = itemView.findViewById(R.id.recipeRate);
        recipeLike = itemView.findViewById(R.id.recipeLike);
@@ -31,9 +31,9 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
     public void bind(RecipeBean recipeBean){
 // Load image using Glide or Picasso
         Glide.with(itemView.getContext())
-                .load(recipeBean.getImage())
+                .load(recipeBean.getImageURL())
                 .into(recipeImage);
         recipeName.setText(recipeBean.getTitle());
-        recipePrice.setText(recipeBean.getIngredients());
+        recipeIngredients.setText(recipeBean.getIngredients());
     }
 }

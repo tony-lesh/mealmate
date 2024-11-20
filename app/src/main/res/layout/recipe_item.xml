@@ -1,104 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <LinearLayout
-        android:id="@+id/recipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:layout_weight="0.4">
+    android:padding="16dp">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/recipeCardView"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:cardCornerRadius="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
-            tools:layout_editor_absoluteX="20dp"
-            >
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@color/blue3">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
                 android:layout_weight="0.4"
-                android:gravity="end"
-                android:background="@color/blue4"
-                android:padding="3dp">
+                android:gravity="end">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/recipeAddToCart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_store_cart"/>
+                    android:src="@drawable/ic_cart"
+                    android:layout_marginEnd="10dp"/>
                 <ImageView
                     android:id="@+id/recipeRate"
-                    android:layout_width="31dp"
-                    android:layout_height="31dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/star"/>
-                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/star"
+                    android:layout_marginEnd="10dp"/>
+                <ImageView
                     android:id="@+id/recipeLike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_delete"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/like_heart"
+                    android:layout_marginEnd="10dp"/>
+
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/recipeImage"
                 android:layout_width="match_parent"
-                android:layout_height="99dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/rec1" />
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cook"/>
 
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/recipeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recipeLayout"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:layout_weight="0.4">
-
-        <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recipeLayout"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="25dp">
             <TextView
                 android:id="@+id/recipeName"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:text="@string/pasta_green_salad"/>
+                android:layout_margin="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="Pasta"/>
 
             <TextView
-                android:id="@+id/recipePrice"
+                android:id="@+id/recipeIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
-                android:text="BWP 0.00"
-                android:gravity="center" />
+                android:text="Ingredients"
+                />
         </LinearLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

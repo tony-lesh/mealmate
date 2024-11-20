@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/blue3"
-
+    android:id="@+id/main"
     android:layout_height="match_parent"
     tools:context=".recipe.RecipeActivity">
 
@@ -92,14 +92,22 @@
         android:layout_height="wrap_content"
         android:text="Choose recipe of your choice below"/>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/recipeChoiceTextView"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/blue3">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/recipeChoiceTextView"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"/>
+      />
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -143,4 +151,5 @@
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
+
 </RelativeLayout>

@@ -1,8 +1,7 @@
 package com.example.mealmate.general;
 
-import android.widget.ImageView;
-
 import com.example.mealmate.recipe.RecipeBean;
+import com.example.mealmate.registration_signin.HomeBean;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,8 +9,6 @@ import java.util.List;
 public class RecipeSearchResponse {
         @SerializedName("results")
         private List<RecipeBean> results;
-
-    // ... other fields as needed
 
         public List<RecipeBean> getResults() {
             return results;
@@ -23,7 +20,7 @@ public class RecipeSearchResponse {
             @SerializedName("title")
             private String title;
             @SerializedName("image")
-            private ImageView image;
+            private String imageURL;
             @SerializedName("ingredients")
             private String ingredients;
             @SerializedName("instructions")
@@ -32,10 +29,10 @@ public class RecipeSearchResponse {
             public Result() {
             }
 
-            public Result(String id, String title, ImageView image, String ingredients, String instructions) {
+            public Result(String id, String title, String imageURL, String ingredients, String instructions) {
                 this.id = id;
                 this.title = title;
-                this.image = image;
+                this.imageURL = imageURL;
                 this.ingredients = ingredients;
                 this.instructions = instructions;
             }
@@ -56,12 +53,12 @@ public class RecipeSearchResponse {
                 this.title = title;
             }
 
-            public ImageView getImage() {
-                return image;
+            public String getImageURL() {
+                return imageURL;
             }
 
-            public void setImage(ImageView image) {
-                this.image = image;
+            public void setImageURL(String image) {
+                this.imageURL = imageURL;
             }
 
             public String getIngredients() {
@@ -85,7 +82,7 @@ public class RecipeSearchResponse {
                 return "Result{" +
                         "id='" + id + '\'' +
                         ", title='" + title + '\'' +
-                        ", image=" + image +
+                        ", image=" + imageURL +
                         ", ingredients='" + ingredients + '\'' +
                         ", instructions='" + instructions + '\'' +
                         '}';

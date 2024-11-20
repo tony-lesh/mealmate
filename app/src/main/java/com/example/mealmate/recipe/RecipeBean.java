@@ -11,7 +11,7 @@ public class RecipeBean {
     @SerializedName("title")
     private String title;
     @SerializedName("image")
-    private ImageView image;
+    private String imageURL;
     @SerializedName("ingredients")
     private String ingredients;
     @SerializedName("instructions")
@@ -20,10 +20,10 @@ public class RecipeBean {
     public RecipeBean() {
     }
 
-    public RecipeBean(String id, String title, ImageView image, String ingredients, String instructions) {
+    public RecipeBean(String id, String title, String imageURL, String ingredients, String instructions) {
         this.id = id;
         this.title = title;
-        this.image = image;
+        this.imageURL = imageURL;
         this.ingredients = ingredients;
         this.instructions = instructions;
     }
@@ -44,12 +44,12 @@ public class RecipeBean {
         this.title = title;
     }
 
-    public ImageView getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(ImageView image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getIngredients() {
@@ -73,7 +73,7 @@ public class RecipeBean {
         return "RecipeBean{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", image=" + image +
+                ", image=" + imageURL +
                 ", ingredients='" + ingredients + '\'' +
                 ", instructions='" + instructions + '\'' +
                 '}';
