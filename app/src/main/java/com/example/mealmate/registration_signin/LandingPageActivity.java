@@ -211,7 +211,7 @@ public class LandingPageActivity extends Activity {
 
         SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
 
-        Call<HomeSearchResponse> call = spoonacularApi.homeRecipes("recipes", API_KEY);
+        Call<HomeSearchResponse> call = spoonacularApi.homeRecipes("food", API_KEY);
         call.enqueue(new Callback<HomeSearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<HomeSearchResponse> call, @NonNull Response<HomeSearchResponse> response) {
