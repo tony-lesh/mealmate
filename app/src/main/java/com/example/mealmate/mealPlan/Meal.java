@@ -1,7 +1,11 @@
 package com.example.mealmate.mealPlan;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Meal {
+    @SerializedName("title")
     public String name;
+    @SerializedName("image")
     public String imageUrl;
 
 

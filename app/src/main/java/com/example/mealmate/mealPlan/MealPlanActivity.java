@@ -1,112 +1,261 @@
 package com.example.mealmate.mealPlan;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealmate.R;
+import com.example.mealmate.general.RecipeSearchResponse;
+import com.example.mealmate.general.SpoonAcularAPI;
+import com.example.mealmate.general.User;
+import com.example.mealmate.mealPlan.breakfast.BreakfastAdapter;
+import com.example.mealmate.mealPlan.lunch.LunchAdapter;
+import com.example.mealmate.notifications.NotificationsActivity;
+import com.example.mealmate.profile.ProfileActivity;
+import com.example.mealmate.recipe.RecipeActivity;
+import com.example.mealmate.recipe.RecipeBean;
+import com.example.mealmate.recipe.UserAdapter;
+import com.example.mealmate.registration_signin.LandingPageActivity;
+import com.example.mealmate.registration_signin.MainActivity;
+import com.example.mealmate.settings.SettingsActivity;
+import com.google.android.material.navigation.NavigationView;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MealPlanActivity extends AppCompatActivity {
 
-    private LinearLayout weekIconsLayout;
-    private TextView dayTextView;
-    private ImageButton previousBtn, nextBtn;
-    private FrameLayout foodFrameLayout;
+    private DrawerLayout drawer;
+    private RecyclerView recyclerView;
+    private BreakfastAdapter breakfastAdapter;
+    private Spinner cuisineSpinner;
+  //  private LunchAdapter lunchAdapter;
+    private List<Meal> recipeList;
 
-    // Data structures for meal plans (replace with actual data)
-    private List<Meal> breakfastList = new ArrayList<>();
-    private List<Meal> lunchList = new ArrayList<>();
-    private List<Meal> supperList = new ArrayList<>();
+    //Spoonacular API key
+    private static final String API_KEY = "4fc61c7816c2497f8512e16e1cf4e863";
+    private static final String BASE_URL = "https://api.spoonacular.com/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
 
-        weekIconsLayout = findViewById(R.id.weekIcons);
-        dayTextView = findViewById(R.id.dayTextView);
-        previousBtn = findViewById(R.id.previousBtn);
-        nextBtn = findViewById(R.id.nextBtn);
-        foodFrameLayout = findViewById(R.id.foodFrameLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        drawer = findViewById(R.id.drawer_layout);
+        cuisineSpinner = findViewById(R.id.mySpinner);
 
-        // Sample data for meals (replace with actual data fetching)
-        breakfastList.add(new Meal("Oatmeal with berries", "Image URL"));
-        lunchList.add(new Meal("Chicken salad sandwich", "Image URL"));
-        supperList.add(new Meal("Salmon with roasted vegetables", "Image URL"));
+        ImageView menuIcon = findViewById(R.id.drawer);  // Assuming your menu icon has this id
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        // Set up initial day and food display
-        updateDayAndFoodDisplay();
-
-        // Handle button clicks for navigation (optional)
-        previousBtn.setOnClickListener(v -> goToPreviousDay());
-        nextBtn.setOnClickListener(v -> goToNextDay());
-    }
-
-    private void updateDayAndFoodDisplay() {
-        // Update day text based on current date (or user selection)
-        dayTextView.setText("Today");
-
-        // Set up breakfast adapter and display
-        BreakfastAdapter breakfastAdapter = new BreakfastAdapter(breakfastList, this);
-        setUpScrollableFoodLayout(breakfastAdapter, R.id.breakfastTextView, R.id.breakfastScrollView);
-
-        // Set up lunch adapter and display
-        LunchAdapter lunchAdapter = new LunchAdapter(lunchList, this);
-        setUpScrollableFoodLayout(lunchAdapter, R.id.lunchTextView, R.id.lunchScrollView);
-
-        // Set up supper adapter and display
-        SupperAdapter supperAdapter = new SupperAdapter(supperList, this);
-        setUpScrollableFoodLayout(supperAdapter, R.id.supperTextView, R.id.supperScrollView);
-    }
-
-    private void setUpScrollableFoodLayout(RecyclerView.Adapter adapter, int textViewId, int scrollViewId) {
-        LinearLayout foodLayout = findViewById(textViewId).findViewById(R.id.iconsLayout);
-
-        // Adjust layout weight for icons based on screen size
-        if (isLargeScreen()) {
-            foodLayout.setWeightSum(1.0f);
-        } else {
-            foodLayout.setWeightSum(0.4f);
+        // Handle menu icon click (optional)
+        if (menuIcon != null) {
+            menuIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isDrawerOpen()) {
+                        closeDrawer();
+                    } else {
+                        openDrawer();
+                    }
+                }
+            });
         }
 
-        RecyclerView recyclerView = new RecyclerView(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                handleNavigationItemClick(itemId);
+                return true;
+            }
+        });
+
+        ArrayAdapter<CharSequence> cuisineAdapter = ArrayAdapter.createFromResource(
+                this, R.array.filter_by, android.R.layout.simple_spinner_item
+        );
+
+        cuisineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cuisineSpinner.setAdapter(cuisineAdapter);
+
+
+        recyclerView = findViewById(R.id.mealPlanRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        recipeList = new ArrayList<>();
 
-        // Add RecyclerView to ScrollView
-        ((ViewGroup) findViewById(scrollViewId)).addView(recyclerView);
+        breakfastAdapter = new BreakfastAdapter(recipeList);
+        recyclerView.setAdapter(breakfastAdapter);
+        breakfastFetchRecipes();
+
+//        lunchAdapter = new LunchAdapter(recipeList);
+//        recyclerView.setAdapter(lunchAdapter);
+//        lunchFetchRecipes();
+
     }
 
-    // Helper methods for day navigation (optional)
-    private void goToPreviousDay() {
-        // Update day and food display based on previous day logic
-        updateDayAndFoodDisplay();
+    private boolean isDrawerOpen() {
+        return drawer.isDrawerOpen(GravityCompat.START);
     }
 
-    private void goToNextDay() {
-        // Update day and food display based on next day logic
-        updateDayAndFoodDisplay();
+    private void openDrawer() {
+        drawer.openDrawer(GravityCompat.START);
     }
 
-    // Helper method to check screen size (optional)
-    private boolean isLargeScreen() {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
+    private void closeDrawer() {
+        drawer.closeDrawer(GravityCompat.START);
+    }
 
-        // Adjust width threshold based on your needs
-        return width > 1000;
+
+    final int profileId = R.id.nav_profile;
+    final int homeId = R.id.nav_home;
+    final int recipeId = R.id.nav_recipe;
+    final int notificationsId = R.id.nav_notifications;
+    final int settingsId = R.id.nav_settings;
+    final int logoutId = R.id.nav_logout;
+// ... define other item IDs
+
+    private void handleNavigationItemClick(int itemId) {
+        if (itemId == homeId) {
+            drawer.closeDrawer(GravityCompat.START);
+            // Handle home item click
+            Intent homeIntent = new Intent(this, LandingPageActivity.class);
+            startActivity(homeIntent);
+        } else if (itemId == recipeId) {
+            drawer.closeDrawer(GravityCompat.START);
+            // Handle recipe item click
+            Intent recipeIntent = new Intent(this, RecipeActivity.class);
+            startActivity(recipeIntent);
+            // ... and so on for other items
+        } else if (itemId == notificationsId) {
+            drawer.closeDrawer(GravityCompat.START);
+            // Handle default case (optional)
+            Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
+            startActivity(notificationsIntent);
+        }else if (itemId == settingsId) {
+            drawer.closeDrawer(GravityCompat.START);
+            // Handle default case (optional)
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+        }else if (itemId == logoutId) {
+            drawer.closeDrawer(GravityCompat.START);
+            // Handle default case (optional)
+            Intent logoutIntent = new Intent(this, MainActivity.class);
+            startActivity(logoutIntent);
+        }else if (itemId == profileId) {
+            drawer.closeDrawer(GravityCompat.START);
+            // Handle profile item click
+            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            startActivity(profileIntent);
+        }
+    }
+
+    private void breakfastFetchRecipes() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
+
+        Call<MealSearchResponse> call = spoonacularApi.searchMealRecipes("recipes", API_KEY);
+        call.enqueue(new Callback<MealSearchResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealSearchResponse> call, @NonNull Response<MealSearchResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        List<Meal> recipes = response.body().getMealRecipe();
+                        if (recipes != null && !recipes.isEmpty()) {
+                            recipeList.addAll(recipes);
+                            breakfastAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("RecipeActivity", "No recipes found for the given query");
+                            Toast.makeText(MealPlanActivity.this, "No recipes found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
+                        Toast.makeText(MealPlanActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
+                    Toast.makeText(MealPlanActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealSearchResponse> call, @NonNull Throwable t) {
+                Log.e("RecipeActivity", "Network error: " + t.getMessage());
+                Toast.makeText(MealPlanActivity.this, "Network error fetching recipes! Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void lunchFetchRecipes() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
+
+        Call<MealSearchResponse> call = spoonacularApi.searchMealRecipes("recipes", API_KEY);
+        call.enqueue(new Callback<MealSearchResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MealSearchResponse> call, @NonNull Response<MealSearchResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        List<Meal> recipes = response.body().getMealRecipe();
+                        if (recipes != null && !recipes.isEmpty()) {
+                            recipeList.addAll(recipes);
+                            breakfastAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("RecipeActivity", "No recipes found for the given query");
+                            Toast.makeText(MealPlanActivity.this, "No recipes found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
+                        Toast.makeText(MealPlanActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
+                    Toast.makeText(MealPlanActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MealSearchResponse> call, @NonNull Throwable t) {
+                Log.e("RecipeActivity", "Network error: " + t.getMessage());
+                Toast.makeText(MealPlanActivity.this, "Network error fetching recipes! Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

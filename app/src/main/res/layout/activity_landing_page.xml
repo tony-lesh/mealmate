@@ -145,6 +145,7 @@
 
     </androidx.cardview.widget.CardView>
 
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -183,4 +184,5 @@
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
+    
 </RelativeLayout>

@@ -39,7 +39,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
-    
+
+    implementation ("androidx.drawerlayout:drawerlayout:1.1.1")
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+
     implementation (libs.retrofit2.retrofit)
     implementation (libs.converter.gson)
 

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class RecipeBean {
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("title")
     private String title;
     @SerializedName("image")
@@ -16,23 +16,27 @@ public class RecipeBean {
     private String ingredients;
     @SerializedName("instructions")
     private String instructions;
+    @SerializedName("description")
+    private String description;
+
 
     public RecipeBean() {
     }
 
-    public RecipeBean(String id, String title, String imageURL, String ingredients, String instructions) {
+    public RecipeBean(int id, String title, String imageURL, String ingredients, String instructions,String description) {
         this.id = id;
         this.title = title;
         this.imageURL = imageURL;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.description = description;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -68,14 +72,23 @@ public class RecipeBean {
         this.instructions = instructions;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "RecipeBean{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
-                ", image=" + imageURL +
+                ", imageURL='" + imageURL + '\'' +
                 ", ingredients='" + ingredients + '\'' +
                 ", instructions='" + instructions + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

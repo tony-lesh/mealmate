@@ -47,7 +47,7 @@ public class RecipeActivity extends AppCompatActivity {
     private List<RecipeBean> recipeList;
 
     //Spoonacular API key
-    private static final String API_KEY = "bbd9856b92e34c7bbd0b995d94d7b1f9";
+    private static final String API_KEY = "4fc61c7816c2497f8512e16e1cf4e863";
     private static final String BASE_URL = "https://api.spoonacular.com/";
 
     @Override
@@ -155,53 +155,6 @@ public class RecipeActivity extends AppCompatActivity {
             startActivity(profileIntent);
         }
     }
-
-//    private  void fetchRecipes() {
-//
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
-//
-//        Call<RecipeSearchResponse> call = spoonacularApi.searchRecipes("pasta", API_KEY);
-//        call.enqueue(new Callback<RecipeSearchResponse>() {
-//            @Override
-//            public void onResponse(@NonNull Call<RecipeSearchResponse> call, @NonNull Response<RecipeSearchResponse>
-//                    response) {
-//
-//                if (response.isSuccessful()) {
-////                    assert response.body() != null;
-////                    List<RecipeBean> recipes = response.body().getResults();
-////                    Log.d("RecipeActivity", "Fetched " + recipes.size() + " recipes");
-////                    recipeList.addAll(recipes);
-////                    userAdapter.notifyDataSetChanged();
-//
-//                    try {
-//                        List<RecipeBean> recipes = response.body().getResults();
-//                        recipeList.addAll(recipes);
-//                        userAdapter.notifyDataSetChanged();
-//                    } catch (JsonSyntaxException e) {
-//                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
-//                        Toast.makeText(RecipeActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
-//                    Toast.makeText(RecipeActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<RecipeSearchResponse> call, @NonNull Throwable t) {
-//                Log.e("RecipeActivity", "Network error: " + t.getMessage());
-//                Toast.makeText(RecipeActivity.this, "Network error fetching recipes! Please check your internet connection.", Toast.LENGTH_SHORT).show();
-//
-//             //   Toast.makeText(RecipeActivity.this, "Network error fetching recipes!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     private void fetchRecipes() {
         Retrofit retrofit = new Retrofit.Builder()

@@ -4,6 +4,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:id="@+id/main"
     tools:context=".mealPlan.MealPlanActivity">
 
     <LinearLayout
@@ -26,11 +29,20 @@
 
     </LinearLayout>
 
+    <Spinner
+        android:id="@+id/mySpinner"
+        android:layout_width="match_parent"
+        android:layout_below="@id/top_nav"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"/>
+
     <TextView
         android:id="@+id/weekTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_nav"
+        android:layout_below="@+id/mySpinner"
         android:text="This Week"
         android:textStyle="bold"
         android:textColor="@color/blue"
@@ -43,8 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/top_nav"
-        >
+        android:layout_below="@id/mySpinner">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,6 +78,7 @@
             android:padding="5dp"/>
 
     </LinearLayout>
+
     </LinearLayout>
 
 
@@ -124,205 +136,27 @@
 
     </FrameLayout>
 
-
-    <FrameLayout
-        android:id="@+id/foodFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_below="@id/dayFrameLayout"
-        android:layout_marginTop="20dp">
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        android:layout_below="@+id/dayFrameLayout"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/breakfastTextView"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Breakfast"
-                android:layout_marginVertical="2dp"
-                android:textSize="20sp"
-                android:layout_marginHorizontal="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/iconsLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_weight="0.4">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/like_heart"
-                    android:layout_marginHorizontal="5dp"
-                    android:padding="5dp"/>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/like_heart"
-                    android:padding="5dp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-            <HorizontalScrollView
-                android:id="@+id/breakfastScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/breakfastTextView"
-                android:background="@color/blue4">
-        <ImageView
-            android:id="@+id/breakfastImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
-            android:layout_marginHorizontal="20dp"/>
-            </HorizontalScrollView>
-
-            <LinearLayout
-                android:id="@+id/lunchTextView"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginEnd="10dp"
-                android:layout_below="@id/breakfastScrollView"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Lunch"
-                    android:layout_marginVertical="2dp"
-                    android:textSize="20sp"
-                    android:layout_marginHorizontal="10dp"/>
-
-                <LinearLayout
-                    android:id="@+id/iconsLayout1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:layout_weight="0.4">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/like_heart"
-                        android:layout_marginHorizontal="5dp"
-                        android:padding="5dp"/>
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/like_heart"
-                        android:padding="5dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-            <HorizontalScrollView
-                android:id="@+id/lunchScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lunchTextView"
-                android:background="@color/blue4">
-                <ImageView
-                    android:id="@+id/lunchImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
-                    android:layout_marginHorizontal="20dp"/>
-            </HorizontalScrollView>
-
-            <LinearLayout
-                android:id="@+id/supperTextView"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginEnd="10dp"
-                android:layout_below="@id/lunchScrollView"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Lunch"
-                    android:layout_marginVertical="2dp"
-                    android:textSize="20sp"
-                    android:layout_marginHorizontal="10dp"/>
-
-                <LinearLayout
-                    android:id="@+id/iconsLayout2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:layout_weight="0.4">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/like_heart"
-                        android:layout_marginHorizontal="5dp"
-                        android:padding="5dp"/>
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/like_heart"
-                        android:padding="5dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-            <HorizontalScrollView
-                android:id="@+id/supperScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/supperTextView"
-                android:background="@color/blue4">
-                <ImageView
-                    android:id="@+id/supperImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="120dp"
-                    android:layout_marginHorizontal="20dp"
-                    />
-            </HorizontalScrollView>
-
-        </RelativeLayout>
-        </ScrollView>
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/mealPlanRecyclerView"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"/>
 
 
     </androidx.cardview.widget.CardView>
 
-    </FrameLayout>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -344,6 +178,8 @@
                     android:padding="5dp"/>
             </LinearLayout>
 
+
+
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -355,4 +191,6 @@
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
+
+
 </RelativeLayout>

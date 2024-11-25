@@ -35,4 +35,9 @@
     <string name="recipe">Recipe</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
+
+    <string-array name="filter_by"> Filter By
+        <item>Day</item>
+        <item>Week</item>
+    </string-array>
 </resources>

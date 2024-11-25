@@ -16,7 +16,7 @@ public class RecipeSearchResponse {
 
         public static class Result{
             @SerializedName("id")
-            private String id;
+            private int id;
             @SerializedName("title")
             private String title;
             @SerializedName("image")
@@ -29,7 +29,7 @@ public class RecipeSearchResponse {
             public Result() {
             }
 
-            public Result(String id, String title, String imageURL, String ingredients, String instructions) {
+            public Result(int id, String title, String imageURL, String ingredients, String instructions) {
                 this.id = id;
                 this.title = title;
                 this.imageURL = imageURL;
@@ -37,11 +37,11 @@ public class RecipeSearchResponse {
                 this.instructions = instructions;
             }
 
-            public String getId() {
+            public int getId() {
                 return id;
             }
 
-            public void setId(String id) {
+            public void setId(int id) {
                 this.id = id;
             }
 

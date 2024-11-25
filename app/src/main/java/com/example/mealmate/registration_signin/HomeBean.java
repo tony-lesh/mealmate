@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class HomeBean {
 
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("title")
     private String title;
     @SerializedName("image")
@@ -16,18 +16,18 @@ public class HomeBean {
     public HomeBean() {
     }
 
-    public HomeBean(String id, String title, String imageURL, String description) {
+    public HomeBean(int id, String title, String imageURL, String description) {
         this.id = id;
         this.title = title;
         this.imageURL = imageURL;
         this.description = description;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -58,7 +58,7 @@ public class HomeBean {
     @Override
     public String toString() {
         return "HomeBean{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", imageURL='" + imageURL + '\'' +
                 ", description='" + description + '\'' +

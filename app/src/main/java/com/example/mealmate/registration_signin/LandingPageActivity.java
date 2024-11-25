@@ -62,7 +62,7 @@ public class LandingPageActivity extends Activity {
     private List<HomeBean> homeList;
 
     //Spoonacular API key
-    private static final String API_KEY = "bbd9856b92e34c7bbd0b995d94d7b1f9";
+    private static final String API_KEY = "4fc61c7816c2497f8512e16e1cf4e863";
     private static final String BASE_URL = "https://api.spoonacular.com/";
 
     @Override
@@ -143,7 +143,7 @@ public class LandingPageActivity extends Activity {
          recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         homeList = new ArrayList<>();
-        homeAdapter = new HomeAdapter(homeList);
+        homeAdapter = new HomeAdapter(this, homeList);
         recyclerView.setAdapter(homeAdapter);
         fetchRecipes();
     }
