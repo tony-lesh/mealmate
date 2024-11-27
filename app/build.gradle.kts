@@ -37,12 +37,21 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
+
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
 
-    implementation ("androidx.drawerlayout:drawerlayout:1.1.1")
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation (libs.play.services.auth)
+
+    implementation (libs.play.services.maps.v1802)  
+
+    implementation (libs.firebase.firestore)
+    implementation (libs.firebase.auth)  // Optional, if using user authentication
+
+    implementation (libs.drawerlayout)
+    implementation (libs.glide.v4110)
+    implementation(libs.play.services.maps)
+    annotationProcessor (libs.compiler.v4110)
 
     implementation (libs.retrofit2.retrofit)
     implementation (libs.converter.gson)

@@ -35,6 +35,8 @@ import com.example.mealmate.recipe.RecipeBean;
 import com.example.mealmate.recipe.UserAdapter;
 import com.example.mealmate.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,22 +84,46 @@ public class LandingPageActivity extends Activity {
         NavigationView navigationView = findViewById(R.id.nav_view); // Replace R.id.nav_view with your actual ID
         tagNameTextView = findViewById(R.id.tagName);
 
-        userRef = FirebaseDatabase.getInstance().getReference("Users/" +user.getUserId());
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get the user's name from the dataSnapshot
-                String name = dataSnapshot.child("name").getValue(String.class);
+//        userRef = FirebaseDatabase.getInstance().getReference("Users/" +user.getUserId());
+//        userRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                // Get the user's name from the dataSnapshot
+//                String name = dataSnapshot.child("name").getValue(String.class);
+//
+//                // Update the TextView
+//                tagNameTextView.setText("Welcome "+name+ "!");
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("Firebase", "Failed to read user data", error.toException());
+//                tagNameTextView.setText("Guest!");
+//            }
+//        });
 
-                // Update the TextView
-                tagNameTextView.setText("Welcome "+name+ "!");
+
+        // Initialize FirebaseAuth
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+// Get the currently signed-in user
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if (currentUser != null) {
+            // Get the user's display name from Firebase Authentication
+            String displayName = currentUser.getDisplayName();
+
+            // If the display name is available, show it
+            if (displayName != null && !displayName.isEmpty()) {
+                tagNameTextView.setText("Welcome " + displayName + "!");
+            } else {
+                // If no display name is set, show a default welcome message
+                tagNameTextView.setText("Welcome User!");
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Failed to read user data", error.toException());
-                tagNameTextView.setText("Guest!");
-            }
-        });
+        } else {
+            // No user is signed in, handle the case appropriately
+            tagNameTextView.setText("Guest!");
+        }
+
 
         // Handle menu icon click (optional)
         if (menuIcon != null) {
@@ -195,6 +221,8 @@ public class LandingPageActivity extends Activity {
             // Handle default case (optional)
             Intent logoutIntent = new Intent(this, MainActivity.class);
             startActivity(logoutIntent);
+            FirebaseAuth.getInstance().signOut();
+
         }else if (itemId == profileId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle profile item click

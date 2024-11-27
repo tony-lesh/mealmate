@@ -13,6 +13,9 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -25,6 +28,15 @@
         android:theme="@style/Theme.MealMate"
         tools:targetApi="31">
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notifications_icon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/blue4" />
 
         <activity
             android:name=".registration_signin.RegisterActivity"
@@ -37,14 +49,15 @@
             android:exported="false"/>
         <activity android:name=".recipe.RecipeActivity"
             android:exported="false"/>
-        <activity android:name=".recipe.Shopping_Cart"
+        <activity android:name=".shoppingCart.Shopping_Cart"
             android:exported="false"/>
         <activity android:name=".mealPlan.MealPlanActivity"
             android:exported="true"/>
-        <activity android:name=".recipe.ingredients.SingleRecipeActivity"
-            android:exported="true"/>
         <activity android:name=".recipe.specificView.SpecificItemActivity"
             android:exported="false"/>
+        <activity android:name=".shoppingCart.groceryList.GroceryListActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".registration_signin.MainActivity"
             android:exported="true">

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mealmate.R;
 import com.example.mealmate.recipe.ingredients.SingleRecipeBean;
 import com.example.mealmate.recipe.specificView.SpecificItemActivity;
+import com.example.mealmate.shoppingCart.Shopping_Cart;
 
 import java.util.List;
 
@@ -48,7 +49,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
         holder.recipeAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Add to cart", Toast.LENGTH_LONG).show();
+                Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), Shopping_Cart.class);
+                intent.putExtra("id", recipeBean.getId()); // Pass recipe ID
+                intent.putExtra("recipeName", recipeBean.getTitle());
+                intent.putExtra("recipeImage", recipeBean.getImageURL());
+                v.getContext().startActivity(intent);
             }
         });
 
