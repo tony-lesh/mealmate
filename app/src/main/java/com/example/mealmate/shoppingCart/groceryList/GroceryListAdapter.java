@@ -4,19 +4,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mealmate.R;
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.List;
 
 public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.GroceryListViewHolder> {
     private final Context context;
-    private final List<GrocerySearchResponse.GroceryItem> groceryList;
+    private final List<GroceryListBean> groceryList;
 
-    public GroceryListAdapter(Context context, List<GrocerySearchResponse.GroceryItem> groceryList) {
+    public GroceryListAdapter(Context context, List<GroceryListBean> groceryList) {
         this.context = context;
         this.groceryList = groceryList;
     }
@@ -30,7 +34,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull GroceryListViewHolder holder, int position) {
-        GrocerySearchResponse.GroceryItem item = groceryList.get(position);
+        GroceryListBean item = groceryList.get(position);
         holder.bindData(item);
     }
 
@@ -45,6 +49,9 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
         CheckBox selectCheckBox;
         ImageView moreOptions, shareOption;
 
+        private TabLayout tabLayout;
+        private ImageButton groceryListMore;
+
         public GroceryListViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -55,14 +62,21 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
             shareOption = itemView.findViewById(R.id.shareImageView);
         }
 
-        public void bindData(GrocerySearchResponse.GroceryItem item) {
+        public void bindData(GroceryListBean item) {
             if (item.getName() != null && !item.getName().isEmpty()) {
+                // Get the amount from the Amount object
+                double amountValue = item.getAmount() != null ? item.getAmount().getValue() : 0.0;
+                String amountUnit = item.getAmount() != null ? item.getAmount().getUnit() : "";
+
                 // Format the grocery item information
-                String groceryText = item.getAmount() + " " +
-                        item.getUnit() + " of " +
+                String groceryText = amountValue + " " +
+                        amountUnit + " of " +
                         item.getName();
+
+                // Set the formatted text to the TextView
                 itemList.setText(groceryText);
             }
         }
+
     }
 }

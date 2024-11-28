@@ -58,7 +58,7 @@ public class MealPlanActivity extends AppCompatActivity {
     private List<Meal> recipeList;
 
     //Spoonacular API key
-    private static final String API_KEY = "4fc61c7816c2497f8512e16e1cf4e863";
+    private static final String API_KEY = "290447a9ac5f4260a69b9d1abd513523";
     private static final String BASE_URL = "https://api.spoonacular.com/";
 
 

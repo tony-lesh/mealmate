@@ -1,6 +1,9 @@
 package com.example.mealmate.recipe.ingredients;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealmate.R;
+import com.example.mealmate.recipe.specificView.SpecificItemActivity;
+import com.example.mealmate.shoppingCart.groceryList.GroceryListActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {

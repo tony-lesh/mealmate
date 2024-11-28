@@ -1,5 +1,7 @@
 package com.example.mealmate.recipe.specificView;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -32,7 +34,9 @@ import com.example.mealmate.recipe.instructions.Instruction;
 import com.example.mealmate.recipe.instructions.InstructionsAdapter;
 import com.example.mealmate.recipe.instructions.InstructionsSearchResponse;
 import com.example.mealmate.registration_signin.LandingPageActivity;
+import com.example.mealmate.shoppingCart.groceryList.GroceryListActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,7 +60,7 @@ public class SpecificItemActivity extends AppCompatActivity {
 
 
     // Spoonacular API key
-    private static final String API_KEY = "4fc61c7816c2497f8512e16e1cf4e863";
+    private static final String API_KEY = "290447a9ac5f4260a69b9d1abd513523";
     private static final String BASE_URL = "https://api.spoonacular.com/";
 
 
@@ -150,7 +154,6 @@ public class SpecificItemActivity extends AppCompatActivity {
                     Log.e("SpecificItemActivity", "API call failed with response code: " + response.code());
                     Toast.makeText(SpecificItemActivity.this, "Error fetching data: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
