@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -129,13 +130,15 @@ public class GroceryListActivity extends AppCompatActivity {
 
         // Get references to the views
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        ImageButton showMoreButton = findViewById(R.id.groceryListShowMore);
+        ImageView showMoreButton = findViewById(R.id.groceryListShowMore);
 
         // Initially hide the TabLayout
         tabLayout.setVisibility(View.GONE);
 
-        // Add tabs to TabLayout (3 items)
-        tabLayout.addTab(tabLayout.newTab().setText("Share"));
+        // Add tabs to TabLayout (example tabs)
+        tabLayout.addTab(tabLayout.newTab().setText("WhatsApp"));
+        tabLayout.addTab(tabLayout.newTab().setText("SMS"));
+        tabLayout.addTab(tabLayout.newTab().setText("Other"));
 
         // Set up the "Show More" button to toggle TabLayout visibility
         showMoreButton.setOnClickListener(v -> {
@@ -146,23 +149,32 @@ public class GroceryListActivity extends AppCompatActivity {
             }
         });
 
-        // Optional: Set up a listener to react when a tab is selected
+        // Optionally: Set up a listener to react when a tab is selected
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // Handle the tab selection here
                 String selectedTab = tab.getText().toString();
-                Toast.makeText(GroceryListActivity.this, "Selected: " + selectedTab, Toast.LENGTH_SHORT).show();
+                if (selectedTab.equals("WhatsApp")) {
+                    // Call your WhatsApp sharing method
+                    shareViaWhatsApp();
+                } else if (selectedTab.equals("SMS")) {
+                    // Call your SMS sharing method
+                    shareViaSMS();
+                } else if (selectedTab.equals("Other")) {
+                    // Call your "Other" sharing method
+                    shareViaOther();
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                // Handle when a tab is unselected (optional)
+                // Optional: Handle unselected tab
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                // Handle when a tab is reselected (optional)
+                // Optional: Handle reselected tab
             }
         });
 
@@ -209,25 +221,6 @@ public class GroceryListActivity extends AppCompatActivity {
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
             return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.my_menu, menu);
-        //set the background of the menu
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int selectedID = item.getItemId();
-
-        if (selectedID == R.id.menu_share) {
-            Toast.makeText(this, "You've selected contact", Toast.LENGTH_SHORT).show();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -294,35 +287,29 @@ public class GroceryListActivity extends AppCompatActivity {
 //        startActivity(Intent.createChooser(shareIntent, "Share via"));
 //    }
 
+    private String getGroceryListText() {
+    StringBuilder groceryListText = new StringBuilder();
+    groceryListText.append("Here is my grocery list:\n");
 
-    // Method to show the share options dialog
-    private void showShareOptionsDialog() {
-        final CharSequence[] options = {"WhatsApp", "SMS", "Other"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Share via");
-        builder.setItems(options, (dialog, item) -> {
-            switch (item) {
-                case 0:
-                    shareViaWhatsApp();
-                    break;
-                case 1:
-                    shareViaSMS();
-                    break;
-                case 2:
-                    shareViaOther();
-                    break;
-            }
-        });
-        builder.show();
+    // Loop through the grocery list and format each item
+    for (GroceryListBean item : grocery) {
+        groceryListText.append("- ").append(item.getName()).append(" (")
+                .append(item.getAmount()).append(")")
+                .append("").append(item.getUnit())
+                .append("\n");
     }
 
-    // Method to share via WhatsApp
+    return groceryListText.toString();
+}
+
+
     private void shareViaWhatsApp() {
+        String groceryListText = getGroceryListText(); // Get formatted grocery list
+
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
         whatsappIntent.setType("text/plain");
-        whatsappIntent.setPackage("com.whatsapp");
-        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Check out this cool app!");
+        whatsappIntent.setPackage("com.whatsapp"); // Set WhatsApp's package name
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, groceryListText); // Share the grocery list
 
         try {
             startActivity(whatsappIntent);
@@ -331,11 +318,12 @@ public class GroceryListActivity extends AppCompatActivity {
         }
     }
 
-    // Method to share via SMS
     private void shareViaSMS() {
+        String groceryListText = getGroceryListText(); // Get formatted grocery list
+
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-        smsIntent.setData(Uri.parse("sms:"));
-        smsIntent.putExtra("sms_body", "Check out this cool app!");
+        smsIntent.setData(Uri.parse("sms:")); // Direct the user to the SMS app
+        smsIntent.putExtra("sms_body", groceryListText); // Share the grocery list
 
         try {
             startActivity(smsIntent);
@@ -344,14 +332,15 @@ public class GroceryListActivity extends AppCompatActivity {
         }
     }
 
-    // Method to share via other options
     private void shareViaOther() {
+        String groceryListText = getGroceryListText(); // Get formatted grocery list
+
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this cool app!");
-
+        shareIntent.putExtra(Intent.EXTRA_TEXT, groceryListText); // Share the grocery list
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
+
 
 
 }

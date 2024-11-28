@@ -43,7 +43,11 @@ dependencies {
 
     implementation (libs.play.services.auth)
 
-    implementation (libs.play.services.maps.v1802)  
+    implementation (libs.play.services.maps.v1802)
+
+
+    implementation ("com.google.android.gms:play-services-maps:18.0.2") // Use the latest version
+
 
     implementation (libs.firebase.firestore)
     implementation (libs.firebase.auth)  // Optional, if using user authentication

@@ -48,6 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="16dp">
 
         <CheckBox
@@ -59,17 +60,19 @@
             android:layout_height="wrap_content"
             android:text="Select All" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end"
             android:orientation="horizontal">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/groceryListShowMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_more"/>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                android:layout_marginVertical="5dp"
+                    android:src="@drawable/share_icon"/>
 
             <ImageButton
                 android:id="@+id/groceryListDeleteAll"
@@ -79,18 +82,25 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete"/>
 
-            <!-- TabLayout for dropdown options -->
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:tabMode="fixed"
-                app:tabGravity="fill"
-                app:tabTextColor="@color/white"
-                app:tabIndicatorColor="@color/white"
-                android:visibility="gone" /> <!-- Initially hidden -->
+                android:orientation="vertical">
+                <!-- TabLayout for dropdown options -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill"
+                    app:tabTextColor="@color/white"
+                    app:tabIndicatorColor="@color/white"
+                    android:visibility="gone" /> <!-- Initially hidden -->
+            </LinearLayout>
 
         </LinearLayout>
+
 
 
     </LinearLayout>

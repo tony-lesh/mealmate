@@ -38,6 +38,10 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/blue4" />
 
+<!--        <meta-data-->
+<!--            android:name="com.google.android.geo.API_KEY"-->
+<!--            android:value="YOUR_API_KEY"/> &lt;!&ndash; Replace with your API key &ndash;&gt;-->
+
         <activity
             android:name=".registration_signin.RegisterActivity"
             android:exported="false"/>

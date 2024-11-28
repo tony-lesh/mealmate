@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealmate.R;
 import com.example.mealmate.recipe.specificView.SpecificItemActivity;
+import com.example.mealmate.shoppingCart.Shopping_Cart;
 import com.example.mealmate.shoppingCart.groceryList.GroceryListActivity;
 
 import java.io.Serializable;
@@ -49,6 +51,18 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             }
         });
 
+//        holder.recipeAddToCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(v.getContext(), Shopping_Cart.class);
+//                intent.putExtra("id", ingredient.getName()); // Pass recipe ID
+//                intent.putExtra("recipeName", ingredient.getAmount());
+//                intent.putExtra("recipeImage", ingredient.getUnit());
+//                v.getContext().startActivity(intent);
+//            }
+//        });
+
     }
     @Override
     public int getItemCount() {
@@ -58,10 +72,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {
 
         TextView ingredientTextView;
+        ImageView recipeAddToCart, recipeRate, recipeLike;
 
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
             ingredientTextView = itemView.findViewById(R.id.recipeIngredients);
+            recipeAddToCart = itemView.findViewById(R.id.recipeAddToCart);
+            recipeRate = itemView.findViewById(R.id.recipeRate);
+            recipeLike = itemView.findViewById(R.id.recipeLike);
         }
 
             public void bind(Ingredient ingredient) {
