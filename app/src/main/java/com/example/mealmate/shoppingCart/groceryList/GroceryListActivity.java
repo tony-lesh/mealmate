@@ -289,19 +289,16 @@ public class GroceryListActivity extends AppCompatActivity {
 
     private String getGroceryListText() {
     StringBuilder groceryListText = new StringBuilder();
-    groceryListText.append("Here is my grocery list:\n");
+    groceryListText.append("Grocery list:\n");
 
     // Loop through the grocery list and format each item
     for (GroceryListBean item : grocery) {
-        groceryListText.append("- ").append(item.getName()).append(" (")
-                .append(item.getAmount()).append(")")
-                .append("").append(item.getUnit())
+        groceryListText.append("- ").append(item.getName())
                 .append("\n");
     }
 
     return groceryListText.toString();
 }
-
 
     private void shareViaWhatsApp() {
         String groceryListText = getGroceryListText(); // Get formatted grocery list
