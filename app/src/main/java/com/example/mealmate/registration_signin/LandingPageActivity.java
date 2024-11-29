@@ -12,36 +12,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealmate.R;
 import com.example.mealmate.general.HomeSearchResponse;
-import com.example.mealmate.general.RecipeSearchResponse;
 import com.example.mealmate.general.SpoonAcularAPI;
 import com.example.mealmate.general.User;
 import com.example.mealmate.mealPlan.MealPlanActivity;
-import com.example.mealmate.notifications.NotificationsActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
-import com.example.mealmate.recipe.RecipeBean;
-import com.example.mealmate.recipe.UserAdapter;
 import com.example.mealmate.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
@@ -187,10 +177,10 @@ public class LandingPageActivity extends Activity {
     }
 
 
-    final int profileId = R.id.nav_profile;
+    final int myRecipeId = R.id.nav_my_recipe;
     final int homeId = R.id.nav_home;
     final int recipeId = R.id.nav_recipe;
-    final int notificationsId = R.id.nav_notifications;
+    final int mealPlanId = R.id.nav_meal_plan;
     final int settingsId = R.id.nav_settings;
     final int logoutId = R.id.nav_logout;
 // ... define other item IDs
@@ -206,11 +196,11 @@ public class LandingPageActivity extends Activity {
             Intent recipeIntent = new Intent(this, RecipeActivity.class);
             startActivity(recipeIntent);
             // ... and so on for other items
-        } else if (itemId == notificationsId) {
+        } else if (itemId == mealPlanId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)
-            Intent notificationsIntent = new Intent(this, MealPlanActivity.class);
-            startActivity(notificationsIntent);
+            Intent mealPlanIntent = new Intent(this, MealPlanActivity.class);
+            startActivity(mealPlanIntent);
         }else if (itemId == settingsId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)
@@ -223,7 +213,7 @@ public class LandingPageActivity extends Activity {
             startActivity(logoutIntent);
             FirebaseAuth.getInstance().signOut();
 
-        }else if (itemId == profileId) {
+        }else if (itemId == myRecipeId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle profile item click
             Intent profileIntent = new Intent(this, ProfileActivity.class);

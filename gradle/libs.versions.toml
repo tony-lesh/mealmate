@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.2"
+appcompatVersion = "1.4.0"
 compiler = "4.11.0"
 drawerlayout = "1.2.0"
 firebaseAuth = "23.1.0"
@@ -23,6 +24,7 @@ playServicesMaps = "19.0.0"
 playServicesAds = "23.5.0"
 
 [libraries]
+appcompat-v140 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 compiler-v4110 = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "drawerlayout" }

@@ -61,6 +61,8 @@
             android:exported="false"/>
         <activity android:name=".shoppingCart.groceryList.GroceryListActivity"
             android:exported="false"/>
+        <activity android:name=".my_recipes.MyRecipesActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".registration_signin.MainActivity"

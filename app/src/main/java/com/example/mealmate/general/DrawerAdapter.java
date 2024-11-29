@@ -12,7 +12,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.mealmate.R;
-import com.example.mealmate.notifications.NotificationsActivity;
+import com.example.mealmate.mealPlan.MealPlanActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
 import com.example.mealmate.registration_signin.LandingPageActivity;
@@ -71,16 +71,16 @@ public class DrawerAdapter extends Activity {
     }
 
 
-    final int profileId = R.id.nav_profile;
+    final int myRecipeId = R.id.nav_my_recipe;
     final int homeId = R.id.nav_home;
     final int recipeId = R.id.nav_recipe;
-    final int notificationsId = R.id.nav_notifications;
+    final int mealPlanId = R.id.nav_meal_plan;
     final int settingsId = R.id.nav_settings;
     final int logoutId = R.id.nav_logout;
 // ... define other item IDs
 
     private void handleNavigationItemClick(int itemId) {
-        if (itemId == profileId) {
+        if (itemId == myRecipeId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle profile item click
             Intent profileIntent = new Intent(this, ProfileActivity.class);
@@ -96,11 +96,11 @@ public class DrawerAdapter extends Activity {
             Intent recipeIntent = new Intent(this, RecipeActivity.class);
             startActivity(recipeIntent);
             // ... and so on for other items
-        } else if (itemId == notificationsId) {
+        } else if (itemId == mealPlanId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)
-            Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
-            startActivity(notificationsIntent);
+            Intent mealPlanIntent = new Intent(this, MealPlanActivity.class);
+            startActivity(mealPlanIntent);
         }else if (itemId == settingsId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)

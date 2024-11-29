@@ -1,6 +1,7 @@
 package com.example.mealmate.general;
 
 import com.example.mealmate.mealPlan.MealSearchResponse;
+import com.example.mealmate.mealPlan.dailyMealPlan.DailyPlanSearchResponse;
 import com.example.mealmate.recipe.ingredients.IngredientSearchResponse;
 import com.example.mealmate.recipe.instructions.InstructionsSearchResponse;
 import com.example.mealmate.shoppingCart.groceryList.GrocerySearchResponse;
@@ -29,6 +30,11 @@ public interface SpoonAcularAPI {
     default Call<MealSearchResponse> searchMealRecipes(String query, String apiKey){
         return searchMealRecipes(query, apiKey, 1);
     }
+
+
+    @GET("mealplanner/generate")
+    Call<DailyPlanSearchResponse> dailyResponse (@Query("timeFrame") String timeframe,
+                                                 @Query("apiKey") String apiKey);
 
     @GET("recipes/{id}/ingredientWidget.json")
     Call<GrocerySearchResponse> shopList(@Path("id") int id,

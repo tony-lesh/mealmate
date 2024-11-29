@@ -1,196 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="#ffffff"
     android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".mealPlan.MealPlanActivity">
 
-    <LinearLayout
-        android:id="@+id/top_nav"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/blue2">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Meal Plan"
-            android:textColor="@color/blue"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <Spinner
-        android:id="@+id/mySpinner"
-        android:layout_width="match_parent"
-        android:layout_below="@id/top_nav"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:padding="10dp"
-        android:layout_marginTop="30dp"/>
-
-    <TextView
-        android:id="@+id/weekTxtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/mySpinner"
-        android:text="This Week"
-        android:textStyle="bold"
-        android:textColor="@color/blue"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="25dp"/>
-
-    <LinearLayout
-        android:id="@+id/weekIcons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/mySpinner">
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_weight="0.4">
+            android:paddingTop="20dp"
+            app:title="Meal-Plan"
+            android:background="@color/blue4">
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/like_heart"
-            android:layout_marginHorizontal="5dp"
-            android:padding="5dp"/>
+        </androidx.appcompat.widget.Toolbar>
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginHorizontal="5dp"
-            android:background="@drawable/like_heart"
-            android:padding="5dp"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </LinearLayout>
-
-    </LinearLayout>
-
-
-    <FrameLayout
-        android:id="@+id/dayFrameLayout"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        android:background="@color/blue2"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        app:tabIconTint="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_below="@+id/weekIcons"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                android:id="@+id/dayTextView"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="7dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/black"
-                android:text="Monday"
-                android:textStyle="bold"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="start"
-                android:layout_marginTop="5dp">
-            <ImageButton
-                android:id="@+id/previousBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_previous"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end"
-                android:layout_marginTop="5dp">
-                <ImageButton
-                    android:id="@+id/nextBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:src="@drawable/ic_next"
-                    />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-    </FrameLayout>
-
-    <androidx.cardview.widget.CardView
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        android:layout_below="@+id/dayFrameLayout"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"/>
 
-     <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/mealPlanRecyclerView"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"/>
+</LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="29dp"
-                android:layout_marginTop="20dp"
-                android:gravity="end">
-
-                <ImageView
-                    android:id="@+id/drawer"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/menu"
-                    android:padding="5dp"/>
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:elevation="16dp"
-            app:headerLayout="@layout/nav_header"
-            app:menu="@menu/drawer_menu" />
-    </androidx.drawerlayout.widget.DrawerLayout>
-
-
-</RelativeLayout>

@@ -45,6 +45,7 @@ dependencies {
 
     implementation (libs.play.services.maps.v1802)
 
+    implementation (libs.appcompat.v140)  // Or the latest version
 
    // implementation ("com.google.android.gms:play-services-maps:19.0.0") // Use the latest version
 

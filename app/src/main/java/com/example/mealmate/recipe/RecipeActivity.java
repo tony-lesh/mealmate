@@ -22,7 +22,7 @@ import com.example.mealmate.R;
 import com.example.mealmate.general.RecipeSearchResponse;
 import com.example.mealmate.general.SpoonAcularAPI;
 import com.example.mealmate.general.User;
-import com.example.mealmate.notifications.NotificationsActivity;
+import com.example.mealmate.mealPlan.MealPlanActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.registration_signin.LandingPageActivity;
 import com.example.mealmate.registration_signin.MainActivity;
@@ -113,10 +113,10 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
 
-    final int profileId = R.id.nav_profile;
+    final int myRecipeId = R.id.nav_my_recipe;
     final int homeId = R.id.nav_home;
     final int recipeId = R.id.nav_recipe;
-    final int notificationsId = R.id.nav_notifications;
+    final int mealPlanId = R.id.nav_meal_plan;
     final int settingsId = R.id.nav_settings;
     final int logoutId = R.id.nav_logout;
 // ... define other item IDs
@@ -133,11 +133,11 @@ public class RecipeActivity extends AppCompatActivity {
             Intent recipeIntent = new Intent(this, RecipeActivity.class);
             startActivity(recipeIntent);
             // ... and so on for other items
-        } else if (itemId == notificationsId) {
+        } else if (itemId == mealPlanId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)
-            Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
-            startActivity(notificationsIntent);
+            Intent mealPlanIntent = new Intent(this, MealPlanActivity.class);
+            startActivity(mealPlanIntent);
         }else if (itemId == settingsId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle default case (optional)
@@ -148,7 +148,7 @@ public class RecipeActivity extends AppCompatActivity {
             // Handle default case (optional)
             Intent logoutIntent = new Intent(this, MainActivity.class);
             startActivity(logoutIntent);
-        }else if (itemId == profileId) {
+        }else if (itemId == myRecipeId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle profile item click
             Intent profileIntent = new Intent(this, ProfileActivity.class);
