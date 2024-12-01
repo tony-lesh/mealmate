@@ -23,11 +23,13 @@ import com.example.mealmate.general.RecipeSearchResponse;
 import com.example.mealmate.general.SpoonAcularAPI;
 import com.example.mealmate.general.User;
 import com.example.mealmate.mealPlan.MealPlanActivity;
+import com.example.mealmate.my_recipes.MyRecipesActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.registration_signin.LandingPageActivity;
 import com.example.mealmate.registration_signin.MainActivity;
 import com.example.mealmate.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
@@ -129,7 +131,6 @@ public class RecipeActivity extends AppCompatActivity {
             startActivity(homeIntent);
         } else if (itemId == recipeId) {
             drawer.closeDrawer(GravityCompat.START);
-            // Handle recipe item click
             Intent recipeIntent = new Intent(this, RecipeActivity.class);
             startActivity(recipeIntent);
             // ... and so on for other items
@@ -148,11 +149,13 @@ public class RecipeActivity extends AppCompatActivity {
             // Handle default case (optional)
             Intent logoutIntent = new Intent(this, MainActivity.class);
             startActivity(logoutIntent);
+            FirebaseAuth.getInstance().signOut();
+
         }else if (itemId == myRecipeId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle profile item click
-            Intent profileIntent = new Intent(this, ProfileActivity.class);
-            startActivity(profileIntent);
+            Intent myRecipeIntent = new Intent(this, MyRecipesActivity.class);
+            startActivity(myRecipeIntent);
         }
     }
 

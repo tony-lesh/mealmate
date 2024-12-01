@@ -25,6 +25,7 @@ import com.example.mealmate.general.HomeSearchResponse;
 import com.example.mealmate.general.SpoonAcularAPI;
 import com.example.mealmate.general.User;
 import com.example.mealmate.mealPlan.MealPlanActivity;
+import com.example.mealmate.my_recipes.MyRecipesActivity;
 import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
 import com.example.mealmate.settings.SettingsActivity;
@@ -216,8 +217,8 @@ public class LandingPageActivity extends Activity {
         }else if (itemId == myRecipeId) {
             drawer.closeDrawer(GravityCompat.START);
             // Handle profile item click
-            Intent profileIntent = new Intent(this, ProfileActivity.class);
-            startActivity(profileIntent);
+            Intent myRecipeIntent = new Intent(this, MyRecipesActivity.class);
+            startActivity(myRecipeIntent);
         }
     }
 

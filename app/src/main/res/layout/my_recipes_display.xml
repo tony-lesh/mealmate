@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     tools:context=".my_recipes.MyRecipesActivity">
 
 
@@ -43,11 +44,17 @@
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myRecipesRecyclerView"
-            android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
@@ -92,6 +99,7 @@
 
 
     <Button
+        android:id="@+id/addNewBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
