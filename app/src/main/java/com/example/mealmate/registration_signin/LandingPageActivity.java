@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.graphics.Insets;
@@ -23,17 +22,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mealmate.R;
 import com.example.mealmate.general.HomeSearchResponse;
 import com.example.mealmate.general.SpoonAcularAPI;
-import com.example.mealmate.general.User;
 import com.example.mealmate.mealPlan.MealPlanActivity;
 import com.example.mealmate.my_recipes.MyRecipesActivity;
-import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
 import com.example.mealmate.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.gson.JsonSyntaxException;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,6 @@ public class LandingPageActivity extends Activity {
     private HomeAdapter homeAdapter;
     private List<HomeBean> homeList;
 
-    //Spoonacular API key
     private static final String API_KEY = "290447a9ac5f4260a69b9d1abd513523";
     private static final String BASE_URL = "https://api.spoonacular.com/";
 
@@ -62,59 +61,26 @@ public class LandingPageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        drawer = findViewById(R.id.drawer_layout);
-        User user = new User();
-        // Get the menu icon (optional)
-        ImageView menuIcon = findViewById(R.id.drawer);  // Assuming your menu icon has this id
-      //  TextView mealPlanTxtView = findViewById(R.id.createMealTextView);
-        NavigationView navigationView = findViewById(R.id.nav_view); // Replace R.id.nav_view with your actual ID
+
+        // Get the userName passed from MainActivity
+        String userName = getIntent().getStringExtra("userName");
+
         tagNameTextView = findViewById(R.id.tagName);
-
-//        userRef = FirebaseDatabase.getInstance().getReference("Users/" +user.getUserId());
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                // Get the user's name from the dataSnapshot
-//                String name = dataSnapshot.child("name").getValue(String.class);
-//
-//                // Update the TextView
-//                tagNameTextView.setText("Welcome "+name+ "!");
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("Firebase", "Failed to read user data", error.toException());
-//                tagNameTextView.setText("Guest!");
-//            }
-//        });
-
-
-        // Initialize FirebaseAuth
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-
-// Get the currently signed-in user
-        FirebaseUser currentUser = auth.getCurrentUser();
-
-        if (currentUser != null) {
-            // Get the user's display name from Firebase Authentication
-            String displayName = currentUser.getDisplayName();
-
-            // If the display name is available, show it
-            if (displayName != null && !displayName.isEmpty()) {
-                tagNameTextView.setText("Welcome " + displayName + "!");
-            } else {
-                // If no display name is set, show a default welcome message
-                tagNameTextView.setText("Welcome User!");
-            }
+        if (userName != null && !userName.isEmpty()) {
+            tagNameTextView.setText("Welcome, " + userName + "!");
         } else {
-            // No user is signed in, handle the case appropriately
-            tagNameTextView.setText("Guest!");
+            displayFirebaseUserName();
         }
 
+        drawer = findViewById(R.id.drawer_layout);
+        ImageView menuIcon = findViewById(R.id.drawer);  // Assuming your menu icon has this id
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         // Handle menu icon click (optional)
         if (menuIcon != null) {
@@ -129,24 +95,7 @@ public class LandingPageActivity extends Activity {
                 }
             });
         }
-//        mealPlanTxtView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), "Meal Plan Clicked!", Toast.LENGTH_LONG).show();
-//                Intent mealPlanIntent = new Intent(LandingPageActivity.this, MealPlanActivity.class);
-//                startActivity(mealPlanIntent);
-//            }
-//        });
 
-        Button createMealTextView = findViewById(R.id.createMealButton);
-        createMealTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Meal Plan Clicked!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(v.getContext(), RecipeActivity.class);
-                startActivity(intent);
-            }
-        });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -156,14 +105,54 @@ public class LandingPageActivity extends Activity {
             }
         });
 
-        recyclerView = findViewById(R.id.homeRecyclerView);
-         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Button createMealTextView = findViewById(R.id.createMealButton);
+        createMealTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), RecipeActivity.class);
+            startActivity(intent);
+        });
 
+        recyclerView = findViewById(R.id.homeRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         homeList = new ArrayList<>();
         homeAdapter = new HomeAdapter(this, homeList);
         recyclerView.setAdapter(homeAdapter);
         fetchRecipes();
     }
+
+    private void displayFirebaseUserName() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String displayName = currentUser.getDisplayName();
+            if (displayName != null && !displayName.isEmpty()) {
+                tagNameTextView.setText("Welcome, " + displayName.toUpperCase() + "!");
+            } else {
+                fetchUserNameFromDatabase(currentUser.getUid());
+            }
+        } else {
+            tagNameTextView.setText("Welcome, Guest!");
+        }
+    }
+
+    private void fetchUserNameFromDatabase(String userId) {
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue(String.class);
+                if (name != null && !name.isEmpty()) {
+                    tagNameTextView.setText("Welcome, " + name.toUpperCase() + "!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Failed to read user data", error.toException());
+                tagNameTextView.setText("Welcome, Guest!");
+            }
+        });
+    }
+
+
 
     private boolean isDrawerOpen() {
         return drawer.isDrawerOpen(GravityCompat.START);
@@ -229,37 +218,19 @@ public class LandingPageActivity extends Activity {
                 .build();
 
         SpoonAcularAPI spoonacularApi = retrofit.create(SpoonAcularAPI.class);
-
-        Call<HomeSearchResponse> call = spoonacularApi.homeRecipes("food", API_KEY);
-        call.enqueue(new Callback<HomeSearchResponse>() {
+        spoonacularApi.homeRecipes("food", API_KEY).enqueue(new Callback<HomeSearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<HomeSearchResponse> call, @NonNull Response<HomeSearchResponse> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        List<HomeBean> home = response.body().getHome_recipe();
-                        if (home != null && !home.isEmpty()) {
-                            homeList.addAll(home);
-                            homeAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.e("RecipeActivity", "No recipes found for the given query");
-                            Toast.makeText(LandingPageActivity.this, "No recipes found", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JsonSyntaxException e) {
-                        Log.e("RecipeActivity", "Error parsing JSON: " + e.getMessage());
-                        Toast.makeText(LandingPageActivity.this, "Error parsing recipe data", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Log.e("RecipeActivity", "Failed to fetch recipes: " + response.code() + " " + response.message());
-                    Toast.makeText(LandingPageActivity.this, "Failed to fetch recipes from Spoonacular!", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful() && response.body() != null) {
+                    homeList.addAll(response.body().getHome_recipe());
+                    homeAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<HomeSearchResponse> call, @NonNull Throwable t) {
                 Log.e("RecipeActivity", "Network error: " + t.getMessage());
-                Toast.makeText(LandingPageActivity.this, "Network error fetching recipes! Please try again later.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 }
-

@@ -51,7 +51,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder>{
             }
         });
 
-
+        holder.likeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Added to Favorites!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

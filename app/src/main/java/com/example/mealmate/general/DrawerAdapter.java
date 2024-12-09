@@ -13,7 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.mealmate.R;
 import com.example.mealmate.mealPlan.MealPlanActivity;
-import com.example.mealmate.profile.ProfileActivity;
+import com.example.mealmate.settings.user_profile.ProfileActivity;
 import com.example.mealmate.recipe.RecipeActivity;
 import com.example.mealmate.registration_signin.LandingPageActivity;
 import com.example.mealmate.registration_signin.MainActivity;

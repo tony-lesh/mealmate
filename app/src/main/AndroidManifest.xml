@@ -21,8 +21,10 @@
     <uses-feature android:name="android.hardware.camera"
         android:required="false"/>
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -59,12 +61,16 @@
         <activity
             android:name=".registration_signin.RegistrationSuccessActivity"
             android:exported="false"/>
-        <activity android:name=".registration_signin.SplashScreenActivity"
-            android:exported="false"/>
+<!--        <activity android:name=".registration_signin.SplashScreenActivity"-->
+<!--            android:exported="false"/>-->
         <activity
             android:name=".registration_signin.LandingPageActivity"
             android:exported="false"/>
         <activity android:name=".recipe.RecipeActivity"
+            android:exported="false"/>
+        <activity android:name=".settings.SettingsActivity"
+            android:exported="false"/>
+        <activity android:name=".settings.user_profile.ProfileActivity"
             android:exported="false"/>
         <activity android:name=".shoppingCart.Shopping_Cart"
             android:exported="false"/>
@@ -80,8 +86,10 @@
             android:exported="false"/>
         <activity android:name=".my_recipes.ExtentionRecipeDetailsActivity"
             android:exported="false"/>
+        <activity android:name=".registration_signin.MainActivity"
+            android:exported="false"/>
         <activity
-            android:name=".registration_signin.MainActivity"
+            android:name=".registration_signin.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

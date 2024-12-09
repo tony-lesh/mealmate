@@ -24,7 +24,6 @@ import com.example.mealmate.general.SpoonAcularAPI;
 import com.example.mealmate.general.User;
 import com.example.mealmate.mealPlan.MealPlanActivity;
 import com.example.mealmate.my_recipes.MyRecipesActivity;
-import com.example.mealmate.profile.ProfileActivity;
 import com.example.mealmate.registration_signin.LandingPageActivity;
 import com.example.mealmate.registration_signin.MainActivity;
 import com.example.mealmate.settings.SettingsActivity;

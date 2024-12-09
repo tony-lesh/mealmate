@@ -1,4 +1,4 @@
-package com.example.mealmate.settings;
+package com.example.mealmate.settings.user_profile;
 
 import android.os.Bundle;
 
@@ -9,12 +9,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mealmate.R;
 
-public class SettingsActivity extends AppCompatActivity {
-
+public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_user_profile);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

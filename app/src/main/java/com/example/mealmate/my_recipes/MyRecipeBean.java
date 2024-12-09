@@ -11,8 +11,6 @@ public class MyRecipeBean {
     private String ingredients;
     private String instructions;
 
-    public MyRecipeBean() {
-    }
 
     public MyRecipeBean(String id, String title, String imageURL, String ingredients, String instructions) {
         this.id = id;
@@ -20,6 +18,9 @@ public class MyRecipeBean {
         this.imageURL = imageURL;
         this.ingredients = ingredients;
         this.instructions = instructions;
+    }
+
+    public MyRecipeBean() {
     }
 
     public String getId() {

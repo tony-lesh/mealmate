@@ -54,6 +54,7 @@ dependencies {
     // Add the dependency for the Cloud Storage library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.google.firebase.storage)
+    implementation (libs.firebase.storage.v2031)
 
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.core:core-ktx:1.12.0")

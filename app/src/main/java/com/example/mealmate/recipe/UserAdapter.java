@@ -68,7 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
         holder.recipeLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Add to Favorites", Toast.LENGTH_LONG).show();
+                Toast.makeText(v.getContext(), "Added to Favorites!", Toast.LENGTH_LONG).show();
             }
         });
     }

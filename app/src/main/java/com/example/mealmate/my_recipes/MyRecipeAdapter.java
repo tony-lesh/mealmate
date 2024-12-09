@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealmate.R;
+import com.example.mealmate.my_recipes.enter_recipe.EnterRecipeActivity;
 import com.example.mealmate.recipe.ingredients.IngredientAdapter;
 import com.example.mealmate.recipe.specificView.SpecificItemActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -59,7 +60,9 @@ public class MyRecipeAdapter extends RecyclerView.Adapter<MyRecipeAdapter.MyReci
         holder.editImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent editIntent = new Intent(v.getContext(), EnterRecipeActivity.class);
+                editIntent.putExtra("editKey", myRecipeBean.getId());
+                v.getContext().startActivity(editIntent);
             }
         });
 

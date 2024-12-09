@@ -1,32 +1,28 @@
 package com.example.mealmate.registration_signin;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mealmate.R;
 
-@SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
+
+    private static final int SPLASH_DELAY = 2000; // 2 seconds delay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        new Runnable() {
-            public void postDelayed(int i) {
-            }
-
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, LandingPageActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }.postDelayed(2000);
+        // Delaying the transition to the next activity
+        new Handler().postDelayed(() -> {
+            // Navigate to the Landing Page Activity
+            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // Close SplashScreenActivity to prevent users from navigating back to it
+        }, SPLASH_DELAY);
     }
 }
